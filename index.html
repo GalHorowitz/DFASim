@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DFA SIM</title>
+	<meta charset="UTF-8">
+
+	<style type="text/css">
+		html, body {
+			height: 100%;
+		}
+
+		body {
+			margin: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-color: rgb(51, 51, 51);
+		}
+
+		canvas {
+			width: 1000px !important;
+			height: 800px !important;
+			border-radius: 5px;
+			margin-bottom: 10px;
+		}
+
+		input {
+			border-width: 0px;
+			height: 1.2rem;
+			padding: 5px;
+			border-radius: 3px;
+			box-sizing: content-box;
+			width: 20%;
+		}
+	</style>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js" integrity="sha256-WVsM3xrcqyuFNF3W1qtIKbHFsD0977nDQA8DCMp1zCw=" crossorigin="anonymous"></script>
+	<script src="node.js"></script>
+	<script src="transition.js"></script>
+	<script src="index.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="cnv"></div>
+		<div id="control">
+			<input id="currentWord">
+			<input type="button" id="exportBtn" value="Export DFA">
+			<input type="button" id="importBtn" value="Import DFA">
+			<input type="button" id="clearBtn" value="Clear Board">
+		</div>
+	</div>
+</body>
+</html>
