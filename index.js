@@ -85,6 +85,9 @@ let startingArrow = false;
 let drawingArrow = false;
 
 function mousePressed(){
+	if(!mouseInBounds())
+		return;
+
 	if(selectedNode != undefined){
 		selectedNode = undefined;
 	}
@@ -123,7 +126,7 @@ function mousePressed(){
 	}
 }
 
-function mouseReleased(){
+function mouseReleased(){	
 	let toNode;
 	for(let node of nodes){
 		if(distance(node.x, node.y, mouseX, mouseY) < node.size/2){
@@ -211,6 +214,9 @@ function mouseDragged(){
 }
 
 function doubleClicked(){
+	if(!mouseInBounds())
+		return;
+	
 	if(selectedNode != undefined){
 		selectedNode = undefined;
 	}
@@ -218,10 +224,11 @@ function doubleClicked(){
 	for(let node of nodes){
 		if(distance(node.x, node.y, mouseX, mouseY) < node.size/2){
 			node.accepting = !node.accepting;
-			return;
+			return false;
 		}
 	}
 	nodes.push(new Node(mouseX, mouseY, nodeSize));
+	return false;
 }
 
 function keyPressed(){
@@ -267,6 +274,10 @@ function keyTyped(){
 		selectedTransition.text += key;
 		return false;
 	}
+}
+
+function mouseInBounds(){
+	return mouseX>=0 && mouseY>=0 && mouseX<width && mouseY<height;
 }
 
 function getFinalState(word){

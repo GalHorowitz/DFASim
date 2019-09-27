@@ -4,7 +4,10 @@
 	<title>DFA SIM</title>
 	<meta charset="UTF-8">
 
-	<style type="text/css">
+	<link rel="stylesheet" type="text/css" href="modal.css">
+	<script src="modal.js"></script>
+	
+	<style>
 		html, body {
 			height: 100%;
 		}
@@ -32,17 +35,55 @@
 			box-sizing: content-box;
 			width: 20%;
 		}
-	</style>
+		
+		#control {
+			display: flex;
+    		justify-content: space-evenly;
+		}
 
+		.singleBtn {
+			width: 1.2rem;
+			height: 1.2rem;
+			font-weight: 800;
+		}
+
+		p, ul {
+			font-size: 1.2rem;
+		}
+	</style>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js" integrity="sha256-WVsM3xrcqyuFNF3W1qtIKbHFsD0977nDQA8DCMp1zCw=" crossorigin="anonymous"></script>
 	<script src="node.js"></script>
 	<script src="transition.js"></script>
 	<script src="index.js"></script>
 </head>
 <body>
+	<div id="infoModal" class="modal">
+		<div class="modal-content">
+			<span id="closeModal" class="close">&times;</span>
+			<h1>Deterministic Finite Automaton Simulator </h1>
+			<h3>Drawing</h3>
+			<ul>
+				<li>To create a state, double click the canvas.</li>
+				<li>To create a transition arrow, hold shift while dragging from one state to another.</li>
+				<li>To make a state into an accepting one, double click it. Double click again to toggle.</li>
+				<li>To mark the initial state, hold shift while dragging from an empty location into the initial state.</li>
+				<li>Click on a transition or a state to edit its text. While selected, click the delete key to remove it.</li>
+				<li>When editing text, use an underscore for a subscript, and a backslash followed by the name of the letter for greek letters.</li>
+				<li>You can drag states and transitions to move them around.</li>
+			</ul>
+			<h3>Simulating</h3>
+			<ul>
+				<li>When defining transitions, seperate letters by a comma, and don't use spaces.</li>
+				<li>You can use '*' to accept all letters, and you can use ranges: i.e. '1-9'.</li>
+				<li>Type the word into the box below the canvas. After each letter the current state is marked in blue.</li>
+				<li>When the box is green the word is accepted, and when the box is red the word is in a trap state.</li>
+			</ul>
+		</div>
+	</div>
 	<div id="main">
 		<div id="cnv"></div>
 		<div id="control">
+			<input type="button" id="infoBtn" class="singleBtn" value="?">
 			<input id="currentWord">
 			<input type="button" id="exportBtn" value="Export DFA">
 			<input type="button" id="importBtn" value="Import DFA">
