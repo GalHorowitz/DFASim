@@ -5,6 +5,7 @@ class Node {
 		this.y = y;
 		this.text = 'q_'+nodes.length;
 		this.accepting = false;
+		this.errorHighlight = false;
 	}
 
 	draw(highlight, current){
@@ -18,6 +19,10 @@ class Node {
 			fill(122, 207, 207);
 		}else{
 			fill(255);
+		}
+
+		if(this.errorHighlight){
+			fill(209, 88, 88);
 		}
 		
 		strokeWeight(lineStrength);

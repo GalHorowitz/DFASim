@@ -27,12 +27,19 @@
 			margin-bottom: 10px;
 		}
 
-		input {
+		input, button {
 			border-width: 0px;
 			height: 1.2rem;
 			padding: 5px;
 			border-radius: 3px;
 			box-sizing: content-box;
+		}
+
+		button, input[type="button"] {
+			width: 12%;
+		}
+
+		input[type="text"] {
 			width: 20%;
 		}
 		
@@ -41,10 +48,10 @@
     		justify-content: space-evenly;
 		}
 
-		.singleBtn {
-			width: 1.2rem;
+		.tSymbol {
+			/*width: 1.2rem !important;*/
 			height: 1.2rem;
-			font-weight: 800;
+			font-weight: 900;
 		}
 
 		p, ul {
@@ -77,17 +84,22 @@
 				<li>You can use '*' to accept all letters, and you can use ranges: i.e. '1-9'.</li>
 				<li>Type the word into the box below the canvas. After each letter the current state is marked in blue.</li>
 				<li>When the box is green the word is accepted, and when the box is red the word is in a trap state.</li>
+				<li>Use the 'Export DFA' button to generate a string of text that encodes your DFA.</li>
+				<li>Use the 'Import DFA' button to generate a DFA based on a textual represntation.</li>
+				<li>Use the 'Clear Board' button to remove all states and transitions.</li>
+				<li>Use the 'Error-Check' button to check if any states are missing out-going transitions.</li>
 			</ul>
 		</div>
 	</div>
 	<div id="main">
 		<div id="cnv"></div>
 		<div id="control">
-			<input type="button" id="infoBtn" class="singleBtn" value="?">
-			<input id="currentWord">
+			<button type="button" id="infoBtn" class="singleBtn"><span class="tSymbol">?</span> How-To</button>
+			<input type="text" id="currentWord">
 			<input type="button" id="exportBtn" value="Export DFA">
 			<input type="button" id="importBtn" value="Import DFA">
 			<input type="button" id="clearBtn" value="Clear Board">
+			<input type="button" id="lintButton" value="Error-Check">
 		</div>
 	</div>
 </body>

@@ -16,6 +16,7 @@ let transitions = [];
 
 let wordInput;
 let currentWord = '';
+let alphabet = '';
 
 function setup(){
 	let canvas = createCanvas(1000*scaler, 800*scaler);
@@ -38,6 +39,14 @@ function setup(){
 	document.querySelector("#clearBtn").addEventListener('click', (e) => {
 		nodes = [];
 		transitions = [];
+	});
+	document.querySelector("#lintButton").addEventListener('click', (e) => {
+		alphabet = prompt("Enter a comma seperated alphabet: ", alphabet);
+		if(alphabet && alphabet.trim().length != 0){
+			checkForErrors(alphabet);
+		}else{
+			alphabet = '';
+		}
 	});
 }
 
@@ -85,8 +94,6 @@ let startingArrow = false;
 let drawingArrow = false;
 
 function mousePressed(){
-	if(!mouseInBounds())
-		return;
 
 	if(selectedNode != undefined){
 		selectedNode = undefined;
@@ -309,28 +316,34 @@ function getFinalStateHelper(word, curNode){
 		}
 	}
 
-	for(let out of outTransitions){
+	let outTrans = findValidTransition(outTransitions, word[0]);
+	if(outTrans){
+		return getFinalStateHelper(word.substring(1), outTrans.to);
+	}else{
+		return new TrappingNode();
+	}
+}
+
+function findValidTransition(transitionSet, letter){
+	for(let out of transitionSet){
 		if(out.text.length == 0){
 			continue;
 		}
 
 		for(let verb of out.text.split(',')){
-			if(verb == '*' || verb == word[0]){
-				return getFinalStateHelper(word.substring(1), out.to);
+			verb = verb.trim();
+			if(verb == '*' || verb == letter){
+				return out;
 			}else if(verb.length == 3 && verb[1] == '-'){
-				let begin = parseInt(verb[0]);
-				let end = parseInt(verb[2]);
-				let num = parseInt(word[0]);
-				if(!isNaN(begin) && !isNaN(end) && !isNaN(num)){
-					if(begin <= num && num <= end){
-						return getFinalStateHelper(word.substring(1), out.to);
-					}
+				let begin = verb.charCodeAt(0);
+				let end = verb.charCodeAt(2);
+				let num = letter.charCodeAt(0);
+				if(begin <= num && num <= end){
+					return out;
 				}
 			}
 		}
 	}
-
-	return new TrappingNode();
 }
 
 function getStringOfGraph(){
@@ -368,7 +381,9 @@ function loadGraphFromString(str){
 	let nodesJson = JSON.parse(fullJson.nodes);
 
 	for(let rep of nodesJson){
-		tempNodes.push(Object.assign(new Node(), rep));
+		let tempNode = Object.assign(new Node(), rep);
+		tempNode.errorHighlight = false;
+		tempNodes.push(tempNode);
 	}
 
 	let transJson = JSON.parse(fullJson.transitions);
@@ -388,6 +403,25 @@ function loadGraphFromString(str){
 
 	nodes = tempNodes;
 	transitions = tempTransitions;
+}
+
+function checkForErrors(txtAlphabet){
+	let letters = txtAlphabet.split(',');
+	for(let node of nodes){
+		let letterCount = 0;
+		let outTransitions = [];
+		for(let transition of transitions){
+			if(transition.from != node) continue;
+			outTransitions.push(transition);
+		}
+		for(let letter of letters){
+			if(findValidTransition(outTransitions, letter)){
+				letterCount++;
+			}
+		}
+
+		node.errorHighlight = (letterCount != letters.length);
+	}
 }
 
 function prettyText(displayText){
