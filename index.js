@@ -22,32 +22,7 @@ function setup(){
 	let canvas = createCanvas(1000*scaler, 800*scaler);
 	canvas.parent(document.querySelector("#cnv"));
 
-	wordInput = document.querySelector("#currentWord");
-	wordInput.addEventListener('input', (e) => {
-		currentWord = e.target.value;
-	});
-
-	document.querySelector("#exportBtn").addEventListener('click', (e) => {
-		prompt("Copy the data: ", getStringOfGraph());
-	});
-	document.querySelector("#importBtn").addEventListener('click', (e) => {
-		let data = prompt("Enter the data: ");
-		if(data && data.trim().length != 0){
-			loadGraphFromString(data);
-		}
-	});
-	document.querySelector("#clearBtn").addEventListener('click', (e) => {
-		nodes = [];
-		transitions = [];
-	});
-	document.querySelector("#lintButton").addEventListener('click', (e) => {
-		alphabet = prompt("Enter a comma seperated alphabet: ", alphabet);
-		if(alphabet && alphabet.trim().length != 0){
-			checkForErrors(alphabet);
-		}else{
-			alphabet = '';
-		}
-	});
+	setupDocument();
 }
 
 let selectedNode;
@@ -281,6 +256,56 @@ function keyTyped(){
 		selectedTransition.text += key;
 		return false;
 	}
+}
+
+function setupDocument(){
+	wordInput = document.querySelector("#currentWord");
+	wordInput.addEventListener('input', (e) => {
+		currentWord = e.target.value;
+	});
+
+	const exportModal = document.querySelector("#exportModal");
+	document.querySelector("#exportBtn").addEventListener('click', (e) => {
+		exportModal.querySelector("#modalTitle").innerText = "Export DFA Model";
+		exportModal.querySelector("#modalDescription").innerText = "Copy this serialized data and save it:";
+		exportModal.querySelector("#modalTextbox").value = getStringOfGraph();
+		exportModal.querySelector("#modalButton").value = "Copy to clipboard";
+		exportModal.querySelector("#modalButton").onclick = () => {
+			exportModal.querySelector("#modalTextbox").select();
+			document.execCommand("copy");
+			exportModal.style.display = "none";
+		};	
+		exportModal.style.display = "block";
+	});
+	document.querySelector("#importBtn").addEventListener('click', (e) => {
+		exportModal.querySelector("#modalTitle").innerText = "Import DFA Model";
+		exportModal.querySelector("#modalDescription").innerText = "Paste the serialized data and click the button:";
+		exportModal.querySelector("#modalTextbox").value = "";
+		exportModal.querySelector("#modalButton").value = "Import DFA";
+		exportModal.querySelector("#modalButton").onclick = () => {
+			let data = exportModal.querySelector("#modalTextbox").value;
+			if(data && data.trim().length != 0){
+				loadGraphFromString(data.trim());
+			}
+			exportModal.style.display = "none";
+		};	
+		exportModal.style.display = "block";
+		setTimeout(() => {
+			exportModal.querySelector("#modalTextbox").focus();
+		}, 0);
+	});
+	document.querySelector("#clearBtn").addEventListener('click', (e) => {
+		nodes = [];
+		transitions = [];
+	});
+	document.querySelector("#lintButton").addEventListener('click', (e) => {
+		alphabet = prompt("Enter a comma seperated alphabet: ", alphabet);
+		if(alphabet && alphabet.trim().length != 0){
+			checkForErrors(alphabet);
+		}else{
+			alphabet = '';
+		}
+	});
 }
 
 function mouseInBounds(){

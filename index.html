@@ -5,59 +5,9 @@
 	<meta charset="UTF-8">
 
 	<link rel="stylesheet" type="text/css" href="modal.css">
+	<link rel="stylesheet" type="text/css" href="index.css">
 	<script src="modal.js"></script>
-	
-	<style>
-		html, body {
-			height: 100%;
-		}
 
-		body {
-			margin: 0;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			background-color: rgb(51, 51, 51);
-		}
-
-		canvas {
-			width: 1000px !important;
-			height: 800px !important;
-			border-radius: 5px;
-			margin-bottom: 10px;
-		}
-
-		input, button {
-			border-width: 0px;
-			height: 1.2rem;
-			padding: 5px;
-			border-radius: 3px;
-			box-sizing: content-box;
-		}
-
-		button, input[type="button"] {
-			width: 12%;
-		}
-
-		input[type="text"] {
-			width: 20%;
-		}
-		
-		#control {
-			display: flex;
-    		justify-content: space-evenly;
-		}
-
-		.tSymbol {
-			/*width: 1.2rem !important;*/
-			height: 1.2rem;
-			font-weight: 900;
-		}
-
-		p, ul {
-			font-size: 1.2rem;
-		}
-	</style>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js" integrity="sha256-WVsM3xrcqyuFNF3W1qtIKbHFsD0977nDQA8DCMp1zCw=" crossorigin="anonymous"></script>
 	<script src="node.js?version=2"></script>
 	<script src="transition.js?version=2"></script>
@@ -89,6 +39,17 @@
 				<li>Use the 'Clear Board' button to remove all states and transitions.</li>
 				<li>Use the 'Error-Check' button to check if any states are missing out-going transitions.</li>
 			</ul>
+			<br>
+			<p>Made by Gal Horowitz 2019</p>
+		</div>
+	</div>
+	<div id="exportModal" class="modal">
+		<div class="modal-content">
+			<span id="closeModal" class="close">&times;</span>
+			<h1 id="modalTitle"></h1>
+			<p id="modalDescription"></p>
+			<textarea id="modalTextbox" rows="20" spellcheck="false" onfocus="this.select()"></textarea>
+			<input type="button" id="modalButton">
 		</div>
 	</div>
 	<div id="main">
