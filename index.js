@@ -247,11 +247,11 @@ function keyPressed(){
 		}
 	}else if(keyCode == RIGHT_ARROW && keyIsDown(SHIFT)){
 		if(selectedTransition != undefined){
-			selectedTransition.text += ", ימין";
+			selectedTransition.text += ", \u05d9\u05de\u05d9\u05df";
 		}
 	}else if(keyCode == LEFT_ARROW && keyIsDown(SHIFT)){
 		if(selectedTransition != undefined){
-			selectedTransition.text += ", שמאח";
+			selectedTransition.text += ", \u05e9\u05de\u05d0\u05dc";
 		}
 	}
 }
