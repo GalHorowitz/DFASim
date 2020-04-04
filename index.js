@@ -245,6 +245,14 @@ function keyPressed(){
 				}
 			}
 		}
+	}else if(keyCode == RIGHT_ARROW && keyIsDown(SHIFT)){
+		if(selectedTransition != undefined){
+			selectedTransition.text += ", ימין";
+		}
+	}else if(keyCode == LEFT_ARROW && keyIsDown(SHIFT)){
+		if(selectedTransition != undefined){
+			selectedTransition.text += ", שמאח";
+		}
 	}
 }
 
